@@ -3,11 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <script>
-        if (!sessionStorage.getItem('authenticated')) {
-            window.location.href = 'login.html';
-        }
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uzun Mesafe Atış Simülasyonu - İleri Seviye</title>
     <style>
@@ -21,212 +16,74 @@
             color: #fff;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             font-family: sans-serif;
-            overflow: hidden;
-        }
-
-        #main-layout {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: all 0.3s ease;
         }
 
         #player-container {
-            flex-grow: 1;
+            width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #000;
-            position: relative;
-            transition: all 0.3s ease;
         }
 
+        /* Back button styling */
         .back-btn {
             position: absolute;
-            top: 10px;
-            right: 20px;
+            top: 20px;
+            left: 20px;
             background-color: #333;
             color: white;
-            padding: 8px 12px;
+            padding: 10px 15px;
             text-decoration: none;
             border-radius: 5px;
-            z-index: 1000;
+            z-index: 100;
             font-weight: bold;
             font-size: 14px;
             border: 1px solid #555;
-            opacity: 0.8;
         }
 
         .back-btn:hover {
             background-color: #555;
-            opacity: 1;
-        }
-
-        #fallback-menu {
-            width: 240px;
-            height: 100%;
-            background: #222;
-            border-right: 1px solid #444;
-            display: flex;
-            flex-direction: column;
-            transition: margin-left 0.3s ease;
-            flex-shrink: 0;
-            z-index: 999;
-        }
-
-        #fallback-menu.hidden {
-            margin-left: -240px;
-        }
-
-        #menu-content {
-            padding: 15px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        #menu-toggle {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 1001;
-            background: #1976D2;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-        }
-
-        #menu-toggle:hover {
-            background: #1565C0;
-        }
-
-        .menu-btn {
-            width: 100%;
-            margin-bottom: 4px;
-            text-align: left;
-            background: #333;
-            color: #eee;
-            border: 1px solid #444;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 4px;
-            transition: 0.2s;
-            font-size: 13px;
-        }
-
-        .menu-btn:hover {
-            background: #444;
-            border-color: #666;
-        }
-
-        .menu-header {
-            font-size: 11px;
-            color: #aaa;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            border-bottom: 1px solid #444;
-            padding-bottom: 2px;
-            margin-bottom: 5px;
         }
     </style>
 </head>
 
 <body>
-
-    <button id="menu-toggle" onclick="toggleMenu()">☰ Menü</button>
-    <a href="index.html" class="back-btn">Ana Menüden Çık →</a>
-
-    <div id="main-layout">
-        <div id="fallback-menu">
-            <div id="menu-content" style="padding-top: 50px;">
-                <h3
-                    style="margin-top: 0; font-size: 16px; text-align: center; border-bottom: 2px solid #2196F3; padding-bottom: 10px; color: #fff;">
-                    İLERİ SEVİYE MENÜ</h3>
-
-                <button onclick="loadSWF('mainadv.swf')"
-                    style="width:100%; margin-bottom:10px; padding:10px; background:#1976D2; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:4px;">ANA
-                    EKRAN (Reset)</button>
-
-                <div class="menu-header">URBAN SENARYOLAR</div>
-                <button onclick="loadSWF('mm223urban1.swf')" class="menu-btn">Urban 1 (223)</button>
-                <button onclick="loadSWF('mm223urban2.swf')" class="menu-btn">Urban 2 (223)</button>
-                <button onclick="loadSWF('mm223urban3.swf')" class="menu-btn">Urban 3 (223)</button>
-
-                <div class="menu-header">UZUN MENZİL</div>
-                <button onclick="loadSWF('mm264longc.swf')" class="menu-btn">Long C (264)</button>
-                <button onclick="loadSWF('mm308longa.swf')" class="menu-btn">Long A (308)</button>
-                <button onclick="loadSWF('mm308longb.swf')" class="menu-btn">Long B (308)</button>
-                <button onclick="loadSWF('mm308midc.swf')" class="menu-btn">Mid C (308)</button>
-                <button onclick="loadSWF('mm308twlv.swf')" class="menu-btn">Twlv (308)</button>
-
-                <div class="menu-header">MESAFE EĞİTİMİ</div>
-                <button onclick="loadSWF('range1mil.swf')" class="menu-btn">Range 1 (Mil)</button>
-                <button onclick="loadSWF('range2mil.swf')" class="menu-btn">Range 2 (Mil)</button>
-                <button onclick="loadSWF('range3mil.swf')" class="menu-btn">Range 3 (Mil)</button>
-
-                <div class="menu-header">DİĞER</div>
-                <button onclick="loadSWF('classroomadv.swf')" class="menu-btn">Sınıf Eğitimi (Adv)</button>
-            </div>
-        </div>
-
-        <div id="player-container"></div>
-    </div>
+    <a href="index.html" class="back-btn">← Ana Menüye Dön</a>
+    <div id="player-container"></div>
 
     <script src="ruffle/ruffle.js"></script>
     <script>
-        let rufflePlayerInstance = null;
-        let isMenuOpen = true;
-
-        function toggleMenu() {
-            const menu = document.getElementById('fallback-menu');
-            const toggleBtn = document.getElementById('menu-toggle');
-
-            isMenuOpen = !isMenuOpen;
-
-            if (isMenuOpen) {
-                menu.classList.remove('hidden');
-                toggleBtn.textContent = "☰ Gizle";
-            } else {
-                menu.classList.add('hidden');
-                toggleBtn.textContent = "☰ Menü";
-            }
-        }
-
-        function loadSWF(filename) {
-            console.log("Manual load requested: " + filename);
-            if (rufflePlayerInstance) {
-                rufflePlayerInstance.load({
-                    url: filename,
-                    allowScriptAccess: true,
-                    backgroundColor: "#1a1a1a",
-                    base: "",
-                    upgradeToHttps: false,
-                    letterbox: "on",
-                });
-            }
-        }
-
         window.RufflePlayer = window.RufflePlayer || {};
         window.addEventListener("load", (event) => {
+            const container = document.getElementById("player-container");
+            // Simple loading message
+            container.innerHTML = '<div style="color: white; text-align: center;"><h2>Yükleniyor...</h2></div>';
+
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
-            const container = document.getElementById("player-container");
+
+            container.innerHTML = "";
             container.appendChild(player);
-            rufflePlayerInstance = player;
 
             player.load({
-                url: "mainadv.swf",
+                url: "files/mainadv.swf",
                 backgroundColor: "#1a1a1a",
                 allowScriptAccess: true,
-                upgradeToHttps: false,
-                letterbox: "on",
+            });
+
+            player.style.width = "100%";
+            player.style.height = "100%";
+
+            // Fix for "Main Menu" / "Quit" buttons
+            player.addEventListener("fscommand", (event) => {
+                const cmd = event.command.toLowerCase();
+                if (cmd === "quit" || cmd === "exit" || cmd === "return") {
+                    window.location.href = "index.html";
+                }
             });
         });
     </script>
