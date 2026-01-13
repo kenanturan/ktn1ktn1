@@ -20,9 +20,9 @@
             background-color: #1a1a1a;
             color: #fff;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             font-family: sans-serif;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         #main-layout {
@@ -51,11 +51,14 @@
         .logo-overlay {
             position: absolute;
             top: 4%;
-            width: 14%; /* Adjust size as needed */
+            width: 14%;
+            /* Adjust size as needed */
             height: auto;
-            z-index: 50; /* Above Player */
-            pointer-events: none; /* Let clicks pass through */
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+            z-index: 50;
+            /* Above Player */
+            pointer-events: none;
+            /* Let clicks pass through */
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
         }
 
         #logo-left {
@@ -70,7 +73,8 @@
         .back-btn {
             position: absolute;
             top: 10px;
-            right: 60px; /* Moved left to make room for toggle if needed, or keep right */
+            right: 60px;
+            /* Moved left to make room for toggle if needed, or keep right */
             background-color: #333;
             color: white;
             padding: 8px 12px;
@@ -97,12 +101,12 @@
             display: flex;
             flex-direction: column;
             transition: margin-left 0.3s ease;
-            flex-shrink: 0; 
+            flex-shrink: 0;
             z-index: 999;
         }
 
         #fallback-menu.hidden {
-            margin-left: -240px; 
+            margin-left: -240px;
         }
 
         #menu-content {
@@ -114,8 +118,8 @@
         #menu-toggle {
             position: absolute;
             top: 10px;
-            left: 10px; 
-            z-index: 1001; 
+            left: 10px;
+            z-index: 1001;
             background: #2196F3;
             color: white;
             border: none;
@@ -123,7 +127,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         #menu-toggle:hover {
@@ -131,39 +135,40 @@
         }
 
         .menu-btn {
-            width: 100%; 
-            margin-bottom: 4px; 
-            text-align: left; 
-            background: #333; 
-            color: #eee; 
-            border: 1px solid #444; 
-            cursor: pointer; 
-            padding: 8px; 
-            border-radius: 4px; 
+            width: 100%;
+            margin-bottom: 4px;
+            text-align: left;
+            background: #333;
+            color: #eee;
+            border: 1px solid #444;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
             transition: 0.2s;
             font-size: 13px;
         }
+
         .menu-btn:hover {
             background: #444;
             border-color: #666;
         }
+
         .menu-header {
-            font-size: 11px; 
-            color: #aaa; 
-            margin-top: 15px; 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: bold;
             border-bottom: 1px solid #444;
             padding-bottom: 2px;
             margin-bottom: 5px;
         }
-
     </style>
 </head>
 
 <body>
-    
+
     <button id="menu-toggle" onclick="toggleMenu()">☰ Menü</button>
     <a href="index.html" class="back-btn">Ana Menüden Çık →</a>
 
@@ -171,10 +176,14 @@
         <!-- HTML Navigation Fallback -->
         <div id="fallback-menu">
             <div id="menu-content" style="padding-top: 50px;">
-                <h3 style="margin-top: 0; font-size: 16px; text-align: center; border-bottom: 2px solid #2196F3; padding-bottom: 10px; color: #fff;">BÖLÜM LİSTESİ</h3>
-                
-                <button onclick="loadSWF('main.swf')" style="width:100%; margin-bottom:10px; padding:10px; background:#2196F3; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:4px;">ANA EKRAN (Reset)</button>
-                
+                <h3
+                    style="margin-top: 0; font-size: 16px; text-align: center; border-bottom: 2px solid #2196F3; padding-bottom: 10px; color: #fff;">
+                    BÖLÜM LİSTESİ</h3>
+
+                <button onclick="loadSWF('main.swf')"
+                    style="width:100%; margin-bottom:10px; padding:10px; background:#2196F3; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:4px;">ANA
+                    EKRAN (Reset)</button>
+
                 <div class="menu-header">MESAFE EĞİTİMİ</div>
                 <button onclick="loadSWF('range1mil.swf')" class="menu-btn">1. Range 1 (Mil)</button>
                 <button onclick="loadSWF('range2mil.swf')" class="menu-btn">2. Range 2 (Mil)</button>
@@ -182,12 +191,12 @@
                 <button onclick="loadSWF('range4mil.swf')" class="menu-btn">4. Range 4 (Mil)</button>
                 <button onclick="loadSWF('range5mil.swf')" class="menu-btn">5. Range 5 (Mil)</button>
                 <button onclick="loadSWF('range6mil.swf')" class="menu-btn">6. Range 6 (Mil)</button>
-                
+
                 <div class="menu-header">URBAN SENARYOLAR</div>
                 <button onclick="loadSWF('mm223urban1.swf')" class="menu-btn">Urban 1 (223)</button>
                 <button onclick="loadSWF('mm223urban2.swf')" class="menu-btn">Urban 2 (223)</button>
                 <button onclick="loadSWF('mm223urban3.swf')" class="menu-btn">Urban 3 (223)</button>
-                
+
                 <div class="menu-header">UZUN MENZİL</div>
                 <button onclick="loadSWF('mm264longc.swf')" class="menu-btn">Long C (264)</button>
                 <button onclick="loadSWF('mm308longa.swf')" class="menu-btn">Long A (308)</button>
@@ -217,9 +226,9 @@
         function toggleMenu() {
             const menu = document.getElementById('fallback-menu');
             const toggleBtn = document.getElementById('menu-toggle');
-            
+
             isMenuOpen = !isMenuOpen;
-            
+
             if (isMenuOpen) {
                 menu.classList.remove('hidden');
                 toggleBtn.textContent = "☰ Gizle";
@@ -257,6 +266,9 @@
                 allowScriptAccess: true,
                 upgradeToHttps: false,
                 letterbox: "on",
+                splashScreen: false,   // Hides the Ruffle play button logo
+                contextMenu: false,    // Hides the right-click "About Ruffle"
+                unmuteOverlay: "hidden", // Hides the "Click to unmute" overlay
             });
         });
     </script>
