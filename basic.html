@@ -16,124 +16,202 @@
             color: #fff;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            /* Changed to column to manage layout better if needed, but flex row is better for sidebar */
             font-family: sans-serif;
+            overflow: hidden;
+            /* Prevent body scroll, handle inside containers */
+        }
+
+        /* Container for the main layout: Sidebar + Player */
+        #main-layout {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
         }
 
         #player-container {
-            width: 100%;
+            flex-grow: 1;
+            /* Take remaining space */
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #000;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
         /* Back button styling */
         .back-btn {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            right: 20px;
+            /* Moved to right to avoid conflict with sidebar */
             background-color: #333;
             color: white;
-            padding: 10px 15px;
+            padding: 8px 12px;
             text-decoration: none;
             border-radius: 5px;
-            z-index: 100;
+            z-index: 1000;
             font-weight: bold;
             font-size: 14px;
             border: 1px solid #555;
+            opacity: 0.8;
         }
 
         .back-btn:hover {
             background-color: #555;
+            opacity: 1;
+        }
+
+        /* Sidebar Styling */
+        #fallback-menu {
+            width: 240px;
+            height: 100%;
+            background: #222;
+            border-right: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s ease;
+            flex-shrink: 0;
+            /* Don't shrink */
+            z-index: 999;
+        }
+
+        #fallback-menu.hidden {
+            margin-left: -240px;
+            /* Hide by pulling left */
+        }
+
+        #menu-content {
+            padding: 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* Toggle Button Styling */
+        #menu-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            /* Always visible in top left */
+            z-index: 1001;
+            /* Above sidebar */
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        #menu-toggle:hover {
+            background: #1976D2;
+        }
+
+        /* Button styles */
+        .menu-btn {
+            width: 100%;
+            margin-bottom: 4px;
+            text-align: left;
+            background: #333;
+            color: #eee;
+            border: 1px solid #444;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: 0.2s;
+            font-size: 13px;
+        }
+
+        .menu-btn:hover {
+            background: #444;
+            border-color: #666;
+        }
+
+        .menu-header {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            border-bottom: 1px solid #444;
+            padding-bottom: 2px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 
 <body>
-    <a href="index.html" class="back-btn">← Ana Menüye Dön</a>
 
-    <!-- HTML Navigation Fallback -->
-    <div id="fallback-menu"
-        style="position: fixed; top: 60px; left: 20px; width: 220px; max-height: 80%; overflow-y: auto; background: rgba(30, 30, 30, 0.95); padding: 15px; border-radius: 8px; border: 1px solid #444; z-index: 999; box-shadow: 0 0 20px rgba(0,0,0,0.8);">
-        <h3
-            style="margin-top: 0; font-size: 16px; text-align: center; border-bottom: 1px solid #555; padding-bottom: 10px; color: #fff;">
-            BÖLÜM LİSTESİ</h3>
-        <p style="font-size: 12px; color: #FF9800; margin-bottom: 15px; text-align: center; line-height: 1.4;">Ekrandaki
-            butonlar çalışmıyorsa aşağıdaki listeden seçim yapınız:</p>
+    <button id="menu-toggle" onclick="toggleMenu()">☰ Menü</button>
+    <a href="index.html" class="back-btn">Ana Menüden Çık →</a>
 
-        <button onclick="loadSWF('main.swf')"
-            style="width:100%; margin-bottom:10px; padding:8px; background:#2196F3; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:4px;">ANA
-            EKRAN (Reset)</button>
+    <div id="main-layout">
+        <!-- HTML Navigation Fallback -->
+        <div id="fallback-menu">
+            <div id="menu-content" style="padding-top: 50px;"> <!-- Padding for toggle button -->
+                <h3
+                    style="margin-top: 0; font-size: 16px; text-align: center; border-bottom: 2px solid #2196F3; padding-bottom: 10px; color: #fff;">
+                    BÖLÜM LİSTESİ</h3>
 
-        <div
-            style="font-size:11px; color:#aaa; margin-top:10px; text-transform:uppercase; letter-spacing:1px; font-weight:bold;">
-            MESAFE EĞİTİMİ</div>
-        <button onclick="loadSWF('range1mil.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">1.
-            Range 1 (Mil)</button>
-        <button onclick="loadSWF('range2mil.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">2.
-            Range 2 (Mil)</button>
-        <button onclick="loadSWF('range3mil.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">3.
-            Range 3 (Mil)</button>
-        <button onclick="loadSWF('range4mil.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">4.
-            Range 4 (Mil)</button>
-        <button onclick="loadSWF('range5mil.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">5.
-            Range 5 (Mil)</button>
-        <button onclick="loadSWF('range6mil.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">6.
-            Range 6 (Mil)</button>
+                <button onclick="loadSWF('main.swf')"
+                    style="width:100%; margin-bottom:10px; padding:10px; background:#2196F3; color:white; border:none; cursor:pointer; font-weight:bold; border-radius:4px;">ANA
+                    EKRAN (Reset)</button>
 
-        <div
-            style="font-size:11px; color:#aaa; margin-top:15px; text-transform:uppercase; letter-spacing:1px; font-weight:bold;">
-            URBAN SENARYOLAR</div>
-        <button onclick="loadSWF('mm223urban1.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Urban
-            1 (223)</button>
-        <button onclick="loadSWF('mm223urban2.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Urban
-            2 (223)</button>
-        <button onclick="loadSWF('mm223urban3.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Urban
-            3 (223)</button>
+                <div class="menu-header">MESAFE EĞİTİMİ</div>
+                <button onclick="loadSWF('range1mil.swf')" class="menu-btn">1. Range 1 (Mil)</button>
+                <button onclick="loadSWF('range2mil.swf')" class="menu-btn">2. Range 2 (Mil)</button>
+                <button onclick="loadSWF('range3mil.swf')" class="menu-btn">3. Range 3 (Mil)</button>
+                <button onclick="loadSWF('range4mil.swf')" class="menu-btn">4. Range 4 (Mil)</button>
+                <button onclick="loadSWF('range5mil.swf')" class="menu-btn">5. Range 5 (Mil)</button>
+                <button onclick="loadSWF('range6mil.swf')" class="menu-btn">6. Range 6 (Mil)</button>
 
-        <div
-            style="font-size:11px; color:#aaa; margin-top:15px; text-transform:uppercase; letter-spacing:1px; font-weight:bold;">
-            UZUN MENZİL</div>
-        <button onclick="loadSWF('mm264longc.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Long
-            C (264)</button>
-        <button onclick="loadSWF('mm308longa.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Long
-            A (308)</button>
-        <button onclick="loadSWF('mm308longb.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Long
-            B (308)</button>
-        <button onclick="loadSWF('mm308midc.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Mid
-            C (308)</button>
-        <button onclick="loadSWF('mm308twlv.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Twlv
-            (308)</button>
+                <div class="menu-header">URBAN SENARYOLAR</div>
+                <button onclick="loadSWF('mm223urban1.swf')" class="menu-btn">Urban 1 (223)</button>
+                <button onclick="loadSWF('mm223urban2.swf')" class="menu-btn">Urban 2 (223)</button>
+                <button onclick="loadSWF('mm223urban3.swf')" class="menu-btn">Urban 3 (223)</button>
 
-        <div
-            style="font-size:11px; color:#aaa; margin-top:15px; text-transform:uppercase; letter-spacing:1px; font-weight:bold;">
-            DİĞER</div>
-        <button onclick="loadSWF('classroom.swf')"
-            style="width:100%; margin-bottom:4px; text-align:left; background:#333; color:#eee; border:1px solid #444; cursor:pointer; padding:8px; border-radius:4px; transition:0.2s;">Sınıf
-            Eğitimi</button>
+                <div class="menu-header">UZUN MENZİL</div>
+                <button onclick="loadSWF('mm264longc.swf')" class="menu-btn">Long C (264)</button>
+                <button onclick="loadSWF('mm308longa.swf')" class="menu-btn">Long A (308)</button>
+                <button onclick="loadSWF('mm308longb.swf')" class="menu-btn">Long B (308)</button>
+                <button onclick="loadSWF('mm308midc.swf')" class="menu-btn">Mid C (308)</button>
+                <button onclick="loadSWF('mm308twlv.swf')" class="menu-btn">Twlv (308)</button>
+
+                <div class="menu-header">DİĞER</div>
+                <button onclick="loadSWF('classroom.swf')" class="menu-btn">Sınıf Eğitimi</button>
+            </div>
+        </div>
+
+        <div id="player-container"></div>
     </div>
-
-    <div id="player-container"></div>
 
     <script src="ruffle/ruffle.js"></script>
     <script>
         let rufflePlayerInstance = null;
+        let isMenuOpen = true;
+
+        function toggleMenu() {
+            const menu = document.getElementById('fallback-menu');
+            const toggleBtn = document.getElementById('menu-toggle');
+
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                menu.classList.remove('hidden');
+                toggleBtn.textContent = "☰ Gizle";
+                toggleBtn.style.left = "180px"; // Move button with menu if desired, or keep fixed
+                toggleBtn.style.left = "10px"; // Keep fixed for simplicity
+            } else {
+                menu.classList.add('hidden');
+                toggleBtn.textContent = "☰ Menü";
+            }
+        }
 
         function loadSWF(filename) {
             console.log("Manual load requested: " + filename);
@@ -146,8 +224,6 @@
                     upgradeToHttps: false,
                     letterbox: "on",
                 });
-            } else {
-                alert("Player henüz yüklenmedi, lütfen bekleyin.");
             }
         }
 
