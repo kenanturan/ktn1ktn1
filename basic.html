@@ -53,46 +53,87 @@
 
 <body>
     <a href="index.html" class="back-btn">← Ana Menüye Dön</a>
+
+    <!-- Debug Console -->
+    <div id="debug-console"
+        style="position: fixed; bottom: 0; left: 0; right: 0; height: 150px; background: rgba(0,0,0,0.9); color: #0f0; font-family: 'Courier New', monospace; font-size: 12px; overflow-y: auto; z-index: 99999; padding: 10px; border-top: 2px solid #0f0; pointer-events: none;">
+        <div style="border-bottom: 1px solid #333; margin-bottom: 5px;"><strong>DEBUG CONSOLE (Hata Ayıklama)</strong>
+        </div>
+        <div id="debug-logs"></div>
+    </div>
+
     <div id="player-container"></div>
 
     <script src="ruffle/ruffle.js"></script>
     <script>
+        // Logger function
+        function log(msg) {
+            const el = document.getElementById("debug-logs");
+            if (!el) return;
+            const line = document.createElement("div");
+            line.textContent = "[" + new Date().toLocaleTimeString() + "] " + msg;
+            el.appendChild(line);
+            el.parentElement.scrollTop = el.parentElement.scrollHeight;
+            console.log(msg);
+        }
+
+        window.onerror = function (msg) { log("JS ERROR: " + msg); };
+
         window.RufflePlayer = window.RufflePlayer || {};
         window.addEventListener("load", (event) => {
+            log("Ruffle JS loaded.");
+
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
             const container = document.getElementById("player-container");
             container.appendChild(player);
 
-            player.load({
-                url: "main.swf",
-                backgroundColor: "#1a1a1a",
-                allowScriptAccess: true, // Allow FSCommand
-            });
+            log("Player created.");
 
-            player.style.width = "100%";
-            player.style.height = "100%";
-
-            // Enhanced FSCommand handling for debugging
+            // FSCommand Handler
             player.addEventListener("fscommand", (event) => {
-                console.log("FSCommand received:", event.command, event.args);
-                const cmd = event.command.toLowerCase();
+                log("FSCOMMAND: command='" + event.command + "', args='" + event.args + "'");
 
-                // Handle Quit
-                if (cmd === "quit" || cmd === "exit" || cmd === "return") {
+                const cmd = event.command.toLowerCase();
+                const args = event.args.toLowerCase();
+
+                if (cmd === "quit" || cmd === "exit") {
+                    log("Quitting...");
                     window.location.href = "index.html";
                 }
 
-                // Handle potential navigation commands (if the SWF uses fscommand to switch chapters)
-                // Example: fscommand("load", "chapter1.swf") - this is a guess, but if we see it in logs, we can implement it.
+                // EXEC Handler - Attempt to auto-fix .exe calls
+                if (cmd === "exec") {
+                    let target = event.args; // Keep original casing for filename
+
+                    // Convert typical windows paths/extensions
+                    target = target.replace(".exe", ".swf").replace(".bat", ".swf");
+                    target = target.replace(/\\/g, "/"); // Fix backslashes
+
+                    log("ATTEMPTING LOAD: " + target);
+
+                    player.load({
+                        url: target,
+                        allowScriptAccess: true,
+                        backgroundColor: "#1a1a1a",
+                        base: "", // Force root
+                        upgradeToHttps: false
+                    });
+                }
             });
 
+            // Initial Load
             player.load({
                 url: "main.swf",
                 backgroundColor: "#1a1a1a",
                 allowScriptAccess: true,
-                upgradeToHttps: false, // Prevent Ruffle from forcing HTTPS on localhost
+                upgradeToHttps: false,
+                forcedScale: true, // Fix scaling issues
+                letterbox: "on",   // Fix aspect ratio
+                logLevel: "info"
             });
+
+            log("Loading main.swf...");
         });
     </script>
 </body>
