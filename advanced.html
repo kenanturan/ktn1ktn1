@@ -137,18 +137,16 @@
         }
 
         /* Mobile Responsive Styles */
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             #fallback-menu {
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                z-index: 2000;
-                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+                width: 180px;
+                position: relative;
+                z-index: 999;
             }
 
             #main-layout {
-                justify-content: center;
+                justify-content: flex-start;
             }
         }
     </style>
@@ -208,6 +206,9 @@
             if (!isMenuOpen) {
                 menu.classList.add('hidden');
                 toggleBtn.textContent = "☰ Menü";
+            } else {
+                menu.classList.remove('hidden');
+                toggleBtn.textContent = "☰ Gizle";
             }
         });
 

@@ -32,7 +32,7 @@
             transition: all 0.3s ease;
         }
 
-        #player-wrapper {
+        #player-container {
             position: relative;
             flex-grow: 1;
             height: 100%;
@@ -40,11 +40,6 @@
             justify-content: center;
             align-items: center;
             background-color: #000;
-        }
-
-        #player-container {
-            width: 100%;
-            height: 100%;
         }
 
         /* LOGO OVERLAYS */
@@ -166,19 +161,19 @@
         }
 
         /* Mobile Responsive Styles */
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             #fallback-menu {
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                z-index: 2000;
-                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+                /* Keep menu in flow, but reduce width slightly for mobile */
+                width: 180px;
+                position: relative;
+                z-index: 999;
+                /* If screen is REALLY small, this might still be tight, but user asked for fixed menu */
             }
 
             #main-layout {
-                justify-content: center;
-                /* Ensure player is centered */
+                justify-content: flex-start;
+                /* Default flex behavior */
             }
         }
     </style>
@@ -243,6 +238,9 @@
             if (!isMenuOpen) {
                 menu.classList.add('hidden');
                 toggleBtn.textContent = "☰ Menü";
+            } else {
+                menu.classList.remove('hidden');
+                toggleBtn.textContent = "☰ Gizle";
             }
         });
 
