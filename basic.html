@@ -209,13 +209,8 @@
             </div>
         </div>
 
-        <div id="player-wrapper">
-            <!-- LOGO OVERLAYS: Added here to sit on top of player -->
-            <img src="img/logo_left.png" id="logo-left" class="logo-overlay" alt="Logo Sol">
-            <img src="img/logo_right.png" id="logo-right" class="logo-overlay" alt="Logo Sağ">
-
-            <div id="player-container"></div>
-        </div>
+        <div id="player-container"></div>
+    </div>
     </div>
 
     <script src="ruffle/ruffle.js"></script>
@@ -266,9 +261,6 @@
                 allowScriptAccess: true,
                 upgradeToHttps: false,
                 letterbox: "on",
-                splashScreen: false,   // Hides the Ruffle play button logo
-                contextMenu: false,    // Hides the right-click "About Ruffle"
-                unmuteOverlay: "hidden", // Hides the "Click to unmute" overlay
             });
         });
     </script>
