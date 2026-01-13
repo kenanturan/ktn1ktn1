@@ -68,6 +68,7 @@
                 url: "files/main.swf",
                 backgroundColor: "#1a1a1a",
                 allowScriptAccess: true, // Allow FSCommand
+                base: "files/", // Fix for relative paths (loading sub-swfs)
             });
 
             player.style.width = "100%";
