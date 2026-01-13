@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uzun Mesafe Atış Simülasyonu - İleri Seviye</title>
+    <title>Uzun Mesafe Atış Simülasyonu - Temel Seviye</title>
     <style>
         body,
         html {
@@ -59,28 +59,23 @@
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
         window.addEventListener("load", (event) => {
-            const container = document.getElementById("player-container");
-            // Simple loading message
-            container.innerHTML = '<div style="color: white; text-align: center;"><h2>Yükleniyor...</h2></div>';
-
             const ruffle = window.RufflePlayer.newest();
             const player = ruffle.createPlayer();
-
-            container.innerHTML = "";
+            const container = document.getElementById("player-container");
             container.appendChild(player);
 
             player.load({
-                url: "files/mainadv.swf",
+                url: "main.swf",
                 backgroundColor: "#1a1a1a",
-                allowScriptAccess: true,
-                base: "files/", // Fix for relative paths (loading sub-swfs)
+                allowScriptAccess: true, // Allow FSCommand
             });
 
             player.style.width = "100%";
             player.style.height = "100%";
 
-            // Fix for "Main Menu" / "Quit" buttons
+            // Fix for "Main Menu" / "Quit" buttons not working
             player.addEventListener("fscommand", (event) => {
+                console.log("FSCommand received:", event.command, event.args);
                 const cmd = event.command.toLowerCase();
                 if (cmd === "quit" || cmd === "exit" || cmd === "return") {
                     window.location.href = "index.html";
